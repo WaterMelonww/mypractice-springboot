@@ -14,4 +14,6 @@ import java.util.List;
 
 public interface ProductDao extends JpaRepository<Product,String>,JpaSpecificationExecutor<Product> {
     List<Product> findAll(Specification<Product> specification);
+    Product findByProductId(Integer id);
+    Integer deleteByProductId(Integer id);
 }

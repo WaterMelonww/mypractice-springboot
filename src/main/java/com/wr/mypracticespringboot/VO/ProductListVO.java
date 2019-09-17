@@ -22,8 +22,9 @@ public class ProductListVO {
     private Integer productStatus; //商品状态 状态0正常  1下架
     //类目编号
 
-    private String  categoryName; //商品类型
+    private String  categoryName; //商品类型名称
 
+    private String categoryCode;//商品类型编号
     private Date creatTime; //创建时间
     private Date updateTime; //更新时间
 

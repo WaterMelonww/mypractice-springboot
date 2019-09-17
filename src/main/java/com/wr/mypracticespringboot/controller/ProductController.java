@@ -1,6 +1,7 @@
 package com.wr.mypracticespringboot.controller;
 
 import com.wr.mypracticespringboot.AO.AddProductAO;
+import com.wr.mypracticespringboot.AO.AmendProductAO;
 import com.wr.mypracticespringboot.AO.SelectAO;
 import com.wr.mypracticespringboot.Service.CategoryService;
 import com.wr.mypracticespringboot.Service.ProductService;
@@ -33,12 +34,20 @@ public class ProductController {
     @Autowired
     CategoryService categoryService;
     @GetMapping(value = "/findall")
-
     public List<Product> findAll(){
         return service.findAll();
 
     }
 
+    @PostMapping(value = "/delect")
+    public ResultVO delect(@RequestBody AmendProductAO amendProductAO){
+        Integer delect = service.delect(amendProductAO.getProductId());
+        if(delect!=null) {
+            return new ResultVO(200);
+        }else {
+            return new ResultVO(400);
+        }
+    }
 
     @PostMapping(value = "/findbydinamic")
     public List<ProductListVO> findByDynamicCases(@RequestBody SelectAO selectAO){
@@ -67,6 +76,15 @@ public class ProductController {
         return productListVOS;
     }
 
+    @PostMapping(value = "/amend")
+    public ResultVO amend(@RequestBody AmendProductAO amendProductAO){
+        Product save = service.amend(amendProductAO);
+        if (save!=null){
+            return new ResultVO(200,"修改成功");
+        }else {
+            return new ResultVO(400,"修改失败");
+        }
+    }
 
     @PostMapping(value = "/save")
     public ResultVO save(@RequestBody AddProductAO addProductAO){
@@ -82,7 +100,10 @@ public class ProductController {
     @ResponseBody
     public  ResultVO FileUpload(@RequestParam("picture")MultipartFile file) throws IOException {
         String url = service.UploadImage(file);
-        if (url==null){
+        if("文件内容不合法".equals(url)){
+            return new ResultVO(400,"文件内容不合法");
+        }
+        if ("上传失败".equals(url)){
             return new ResultVO(400,"上传失败"); //上传失败
         }
         return new ResultVO(200,url);

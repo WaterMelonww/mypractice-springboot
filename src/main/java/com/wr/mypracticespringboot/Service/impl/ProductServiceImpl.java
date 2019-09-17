@@ -1,6 +1,7 @@
 package com.wr.mypracticespringboot.Service.impl;
 
 import com.wr.mypracticespringboot.AO.AddProductAO;
+import com.wr.mypracticespringboot.AO.AmendProductAO;
 import com.wr.mypracticespringboot.Service.ProductService;
 import com.wr.mypracticespringboot.dao.ProductDao;
 import com.wr.mypracticespringboot.pojo.Product;
@@ -51,6 +52,36 @@ public class ProductServiceImpl implements ProductService {
         product.setAmendId(0);
         product.setAmendName("");
         return productDao.save(product);
+    }
+
+    @Override
+    public Product amend(AmendProductAO amendProductAO) {
+        Product amendproduct= productDao.findByProductId(amendProductAO.getProductId());
+        if(!amendproduct.getProductName().equals(amendProductAO.getProductName())){
+            amendproduct.setProductName(amendProductAO.getProductName());
+        }
+        if(!amendproduct.getProductPrice().equals(amendProductAO.getProductPrice())){
+            amendproduct.setProductPrice(amendProductAO.getProductPrice());
+        }
+        if(amendproduct.getProductIcon().equals(amendProductAO.getProductIcon())){
+        }else {
+            amendproduct.setProductIcon("http://"+amendProductAO.getProductIcon());
+        }
+//        if((amendproduct.getProductIcon()==null&&amendProductAO.getProductIcon()!=null)||
+//                (amendproduct.getProductIcon()!=null&&amendProductAO.getProductIcon()==null)||
+//                amendproduct.getProductIcon().equals(amendProductAO.getProductIcon())){
+
+//        }
+        if(!amendproduct.getProductStatus().equals(amendProductAO.getProductStatus())){
+            amendproduct.setProductStatus(amendProductAO.getProductStatus());
+        }
+        if(!amendproduct.getCategoryCode().equals(amendProductAO.getCategoryCode())){
+            amendproduct.setCategoryCode(amendProductAO.getCategoryCode());
+        }
+        amendproduct.setAmendId(amendProductAO.getAmendId());
+        amendproduct.setAmendName(amendProductAO.getAmendName());
+
+        return productDao.save(amendproduct);
     }
 
 
@@ -113,4 +144,9 @@ public class ProductServiceImpl implements ProductService {
         return "上传失败";
     }
 
+    @Override
+//    @Transactional
+    public Integer delect(Integer productId) {
+       return productDao.deleteByProductId(productId);
+    }
 }

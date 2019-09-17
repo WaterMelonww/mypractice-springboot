@@ -1,5 +1,6 @@
 package com.wr.mypracticespringboot.Service.impl;
 
+import com.wr.mypracticespringboot.AO.AmendProductAO;
 import com.wr.mypracticespringboot.Service.ProductService;
 import com.wr.mypracticespringboot.pojo.Product;
 import org.junit.Test;
@@ -61,5 +62,26 @@ public class ProductServiceImplTest {
             System.out.println(a);
         }
 
+    }
+
+    @Test
+    public void amend() {
+        AmendProductAO amendProductAO=new AmendProductAO();
+        amendProductAO.setProductId(1);
+        amendProductAO.setProductName("辣子鸡");
+        amendProductAO.setProductPrice(new BigDecimal(22.5));
+        amendProductAO.setProductIcon("修改啦");
+        amendProductAO.setProductStatus(1);
+        amendProductAO.setCategoryCode("4");
+        amendProductAO.setAmendId(2);
+        amendProductAO.setAmendName("zhangsan");
+        Product amend = service.amend(amendProductAO);
+        System.out.println(amend);
+    }
+
+    @Test
+    public void delect() {
+        Integer delect = service.delect(1);
+        System.out.println(delect);
     }
 }

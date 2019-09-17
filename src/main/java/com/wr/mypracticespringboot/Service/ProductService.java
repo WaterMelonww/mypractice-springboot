@@ -1,6 +1,7 @@
 package com.wr.mypracticespringboot.Service;
 
 import com.wr.mypracticespringboot.AO.AddProductAO;
+import com.wr.mypracticespringboot.AO.AmendProductAO;
 import com.wr.mypracticespringboot.pojo.Product;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,4 +17,7 @@ public interface ProductService {
     Product save(AddProductAO addProductAO);
     List<Product> findByDynamicCases(String productName ,Integer productId,String categoryCode,Integer productStatus);
     String UploadImage(MultipartFile  file) throws IOException;
+    Integer delect(Integer productId );
+    Product amend(AmendProductAO amendProductAO);
+
 }
