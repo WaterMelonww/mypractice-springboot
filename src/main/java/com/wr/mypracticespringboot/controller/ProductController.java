@@ -36,11 +36,11 @@ public class ProductController {
     @GetMapping(value = "/findall")
     public List<Product> findAll(){
         return service.findAll();
-
     }
 
     @PostMapping(value = "/delect")
     public ResultVO delect(@RequestBody AmendProductAO amendProductAO){
+        System.out.println(amendProductAO.getProductId());
         Integer delect = service.delect(amendProductAO.getProductId());
         if(delect!=null) {
             return new ResultVO(200);
@@ -75,6 +75,7 @@ public class ProductController {
         }
         return productListVOS;
     }
+
 
     @PostMapping(value = "/amend")
     public ResultVO amend(@RequestBody AmendProductAO amendProductAO){

@@ -27,7 +27,7 @@ public class CategoryServiceImplTest {
         pc.setAmendId(1);
         pc.setCreateName("admin");
         pc.setAmendName("admin");
-        service.save(pc);
+//        service.save();
     }
 
     @Test

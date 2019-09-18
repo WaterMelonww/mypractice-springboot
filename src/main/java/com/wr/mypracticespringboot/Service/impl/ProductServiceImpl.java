@@ -8,6 +8,7 @@ import com.wr.mypracticespringboot.pojo.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
@@ -39,6 +40,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional
     public Product save(AddProductAO addProductAO) {
 
         Product product=new Product();
@@ -51,10 +53,17 @@ public class ProductServiceImpl implements ProductService {
         product.setCreateName(addProductAO.getCreateName());
         product.setAmendId(0);
         product.setAmendName("");
-        return productDao.save(product);
+        try {
+            Product save = productDao.save(product);
+            return save;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
+    @Transactional
     public Product amend(AmendProductAO amendProductAO) {
         Product amendproduct= productDao.findByProductId(amendProductAO.getProductId());
         if(!amendproduct.getProductName().equals(amendProductAO.getProductName())){
@@ -81,7 +90,13 @@ public class ProductServiceImpl implements ProductService {
         amendproduct.setAmendId(amendProductAO.getAmendId());
         amendproduct.setAmendName(amendProductAO.getAmendName());
 
-        return productDao.save(amendproduct);
+        try {
+            Product amend = productDao.save(amendproduct);
+            return amend;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
 
@@ -114,6 +129,7 @@ public class ProductServiceImpl implements ProductService {
 
 //    private static  final  List<String> CONTENT_TYPE=Arrays.asList("image/jpeg","image/png");
     @Override
+    @Transactional
     public String UploadImage(MultipartFile file) throws IOException {
 
         //校验文件内容
@@ -145,8 +161,14 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-//    @Transactional
+    @Transactional
     public Integer delect(Integer productId) {
-       return productDao.deleteByProductId(productId);
+       try{
+           Integer integer = productDao.deleteByProductId(productId);
+           return  integer;
+       }
+       catch (Exception e){
+           return null;
+       }
     }
 }

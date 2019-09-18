@@ -10,6 +10,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 public class CORSCfiguration implements WebMvcConfigurer {
+
+
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         //对那种格式进行跨域处理

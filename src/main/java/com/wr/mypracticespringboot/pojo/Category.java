@@ -18,6 +18,7 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer categoryId; //类型id
+
     private String  categoryName; //类型名称
     private String categoryCode; //类型编号 以类型名称的英文名做标识
     private Date creatTime; //创建时间
